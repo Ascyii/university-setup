@@ -25,8 +25,10 @@ key, index, selected = rofi('Select lecture', options, [
     '-kb-custom-1', 'Ctrl+n'
 ])
 
+print(index)
+
 if key == 0:
     sorted_lectures[index].edit()
 elif key == 1:
-    new_lecture = lectures.new_lecture()
+    new_lecture = lectures.new_lecture("New Lecture")
     new_lecture.edit()

@@ -10,7 +10,7 @@ class Course():
         self.path = path
         self.name = path.stem
 
-        self.info = yaml.load((path / 'info.yaml').open())
+        self.info = yaml.safe_load((path / 'info.yaml').open())
         self._lectures = None
 
     @property
@@ -23,6 +23,9 @@ class Course():
         if other == None:
             return False
         return self.path == other.path
+    
+    def __str__(self):
+        return self.name
 
 class Courses(list):
     def __init__(self):

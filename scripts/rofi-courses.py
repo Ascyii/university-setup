@@ -6,6 +6,8 @@ from courses import Courses
 courses = Courses()
 current = courses.current
 
+print(str(current))
+
 try:
     current_index = courses.index(current)
     args = ['-a', current_index]

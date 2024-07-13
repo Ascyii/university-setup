@@ -11,7 +11,7 @@ import subprocess
 from config import get_week, DATE_FORMAT, CURRENT_COURSE_ROOT
 
 # TODO
-locale.setlocale(locale.LC_TIME, "nl_BE.utf8")
+locale.setlocale(locale.LC_TIME, "de_DE.utf8")
 
 
 def number2filename(n):
@@ -44,10 +44,9 @@ class Lecture():
         self.course = course
 
     def edit(self):
-        subprocess.Popen([
-            "x-terminal-emulator",
-            "-e", "zsh", "-i", "-c",
-            f"\\vim --servername kulak --remote-silent {str(self.file_path)}"
+        subprocess.run([
+            "code",
+            f"{str(self.file_path)}"
         ])
 
     def __str__(self):
@@ -113,7 +112,7 @@ class Lectures(list):
             ' ' * 4 + r'\input{' + number2filename(number) + '}\n' for number in r)
         self.master_file.write_text(header + body + footer)
 
-    def new_lecture(self):
+    def new_lecture(self, title):
         if len(self) != 0:
             new_lecture_number = self[-1].number + 1
         else:
@@ -125,7 +124,7 @@ class Lectures(list):
         date = today.strftime(DATE_FORMAT)
 
         new_lecture_path.touch()
-        new_lecture_path.write_text(f'\\lecture{{{new_lecture_number}}}{{{date}}}{{}}\n')
+        new_lecture_path.write_text(f'\\lecture{{{new_lecture_number}}}{{{date}}}{{{title}}}\n')
 
         if new_lecture_number == 1:
             self.update_lectures_in_master([1])
